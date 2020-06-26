@@ -1,0 +1,41 @@
+.info {
+  width: 60%;
+  margin: 0 auto;
+}
+
+.potd {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 10px solid rgb(18, 18, 18);
+}
+
+.title {
+  font-size: 33px;
+  text-transform: uppercase;
+  padding-bottom: 10px;
+  color: #a27bd3;
+  text-align: center;
+}
+
+.infoGroup {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.description {
+  color: rgb(199, 199, 199);
+  font-weight: 300;
+  text-align: center;
+}
+
+.date {
+  background: rgb(46, 46, 46);
+  border: none;
+  color: #a27bd3;
+  padding: 10px;
+  border-radius: 5px;
+}

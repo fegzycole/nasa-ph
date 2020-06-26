@@ -3,10 +3,11 @@ import { Route, Switch } from 'react-router-dom';
 
 import Header from './Header';
 import Home from '../containers/Home';
+import appStyles from '../styles/app.module.scss';
 
 function App() {
   return (
-    <div className="App">
+    <div className={appStyles.app}>
       <Header />
 
       <Switch>

@@ -1,0 +1,28 @@
+.left,
+.right {
+  position: fixed;
+  top: 50%;
+  background-color: #a27bd3;
+  padding: 15px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.left {
+  left: 10px;
+}
+
+.right {
+  right: 10px;
+}
+
+.fas {
+  color: #fff;
+  font-size: 17px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Arrow from '../components/Arrow';
 import Spinner from '../components/Spinner';
 import Info from '../components/Info';
+import homeStyles from '../styles/home.module.scss';
 import updateDate from '../redux/actions/date';
 import toggleSpinner from '../redux/actions/spinner';
 import { getPicture } from '../redux/actions/pictures';
@@ -52,7 +53,7 @@ const Home = ({
   const picture = pictures.find(pic => pic.date === date);
 
   return (
-    <div>
+    <div className={homeStyles.home}>
       <Arrow
         innerClassName="fas fa-chevron-left"
         outerClassName="left"

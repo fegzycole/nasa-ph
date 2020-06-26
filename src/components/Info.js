@@ -1,18 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import Button from './Button';
+import infoStyles from '../styles/info.module.scss';
 
 const Info = ({
-  title, imageUrl, description, handleClick, handleSelect, btnClolor,
+  title,
+  imageUrl,
+  description,
+  handleClick,
+  handleSelect,
+  btnClolor,
 }) => (
-  <div>
-    <h3>{title}</h3>
-    <img src={imageUrl} alt={title} />
-    <div>
-      <Button text="Set Favorite" handleClick={handleClick} color={btnClolor} />
-      <input type="date" onChange={handleSelect} />
+  <div className={infoStyles.info}>
+    <h3
+      className={infoStyles.title}
+    >
+      {title}
+    </h3>
+    <img
+      src={imageUrl}
+      alt={title}
+      className={infoStyles.potd}
+    />
+    <div className={infoStyles.infoGroup}>
+      <Button
+        text="Set Favorite"
+        handleClick={handleClick}
+        color={btnClolor}
+      />
+      <input
+        type="date"
+        onChange={handleSelect}
+        className={infoStyles.date}
+      />
     </div>
-    <p>{description}</p>
+    <p className={infoStyles.description}>{description}</p>
   </div>
 );
 
