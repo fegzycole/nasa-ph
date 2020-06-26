@@ -1,0 +1,59 @@
+.Overlay {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  z-index: 50;
+  display: flex;
+  background-color: inherit;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Spinner,
+.Spinner::after {
+  border-radius: 50%;
+  width: 4em;
+  height: 4em;
+}
+
+.Spinner {
+  margin: 120px auto;
+  font-size: 10px;
+  position: relative;
+  z-index: 51;
+  text-indent: -9999em;
+  border-top: 0.4em solid #b480f3;
+  border-right: 0.4em solid #b480f3;
+  border-bottom: 0.4em solid #b480f3;
+  border-left: 0.4em solid #fff;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation: load 1.1s infinite linear;
+  animation: load 1.1s infinite linear;
+}
+
+@-webkit-keyframes load {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes load {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
