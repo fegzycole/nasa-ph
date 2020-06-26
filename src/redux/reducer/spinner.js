@@ -1,6 +1,6 @@
 import actions from '../actions/index';
 
-const spinner = (state = false, { type }) => {
+const spinner = (state = true, { type }) => {
   switch (type) {
     case actions.TOGGLE_SPINNER:
       return !state;

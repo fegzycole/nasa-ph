@@ -22,7 +22,7 @@ Info.propTypes = {
   description: PropTypes.string,
   handleClick: PropTypes.func,
   handleSelect: PropTypes.func,
-  btnClolor: PropTypes.func.isRequired,
+  btnClolor: PropTypes.string.isRequired,
 };
 
 Info.defaultProps = {
