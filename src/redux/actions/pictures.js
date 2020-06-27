@@ -60,3 +60,35 @@ export const removeFavorite = payload => ({
   type: actions.REMOVE_FAVORITE,
   payload,
 });
+
+export const toggleFavorite = ({ date, favorite }) => dispatch => {
+  let picturesOfTheDay = JSON.parse(localStorage.getItem('picturesOfTheDay'));
+
+  if (favorite) {
+    picturesOfTheDay = picturesOfTheDay.map(picture => {
+      const pic = picture;
+
+      if (picture.date === date) {
+        delete pic.favorite;
+      }
+
+      return picture;
+    });
+
+    dispatch(removeFavorite(date));
+  } else {
+    picturesOfTheDay = picturesOfTheDay.map(picture => {
+      if (picture.date === date) {
+        return { ...picture, favorite: true };
+      }
+
+      return picture;
+    });
+
+    dispatch(addFavorite(date));
+  }
+
+  picturesOfTheDay = JSON.stringify(picturesOfTheDay);
+
+  localStorage.setItem('picturesOfTheDay', picturesOfTheDay);
+};

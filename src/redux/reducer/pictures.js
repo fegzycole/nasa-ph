@@ -7,6 +7,26 @@ const date = (state = picturesOfTheDay || [], { type, payload }) => {
     case actions.ADD_PICTURE:
       return [...state, payload];
 
+    case actions.REMOVE_FAVORITE:
+      return state.map(picture => {
+        const pic = picture;
+
+        if (picture.date === payload) {
+          delete pic.favorite;
+        }
+
+        return picture;
+      });
+
+    case actions.ADD_FAVORITE:
+      return state.map(picture => {
+        if (picture.date === payload) {
+          return { ...picture, favorite: true };
+        }
+
+        return picture;
+      });
+
     default:
       return state;
   }

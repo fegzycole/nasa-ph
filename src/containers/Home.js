@@ -7,13 +7,13 @@ import Spinner from '../components/Spinner';
 import Info from '../components/Info';
 import homeStyles from '../styles/home.module.scss';
 import updateDate from '../redux/actions/date';
-import { getPicture } from '../redux/actions/pictures';
+import { getPicture, toggleFavorite } from '../redux/actions/pictures';
 import {
-  getPrevDate, getNextDate, toggleFavorite, getNormalizedDate,
+  getPrevDate, getNextDate, getNormalizedDate,
 } from '../helpers/index';
 
 const Home = ({
-  spinner, getPicture, date, pictures, updateDate, error,
+  spinner, getPicture, date, pictures, updateDate, error, toggleFavorite,
 }) => {
   const getCurrPicture = (picDate = date) => {
     const selectedDate = pictures.find(pic => pic.date === picDate);
@@ -35,7 +35,6 @@ const Home = ({
 
   const handleNextClick = () => {
     const newDate = getNextDate(date);
-    console.log(54545454, newDate);
     updateDate(newDate);
     getCurrPicture(newDate);
   };
@@ -72,7 +71,7 @@ const Home = ({
                   description={picture.explanation}
                   imageUrl={picture.url}
                   btnClolor={picture.favorite ? 'red' : '#b480f3'}
-                  handleClick={toggleFavorite}
+                  handleClick={() => toggleFavorite(picture)}
                   handleSelect={e => getSelectedDate(e.target.value)}
                 />
               ) : <p className={homeStyles.error}>{error}</p>
@@ -96,6 +95,7 @@ const mapStateToProps = ({
 const mapDispatchToProps = dispatch => ({
   getPicture: date => dispatch(getPicture(date)),
   updateDate: date => dispatch(updateDate(date)),
+  toggleFavorite: picture => dispatch(toggleFavorite(picture)),
 });
 
 Home.propTypes = {
@@ -105,10 +105,12 @@ Home.propTypes = {
   pictures: PropTypes.instanceOf(Object).isRequired,
   updateDate: PropTypes.func.isRequired,
   error: PropTypes.string,
+  toggleFavorite: PropTypes.func,
 };
 
 Home.defaultProps = {
   error: null,
+  toggleFavorite: () => null,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
