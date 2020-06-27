@@ -7,23 +7,20 @@ import Spinner from '../components/Spinner';
 import Info from '../components/Info';
 import homeStyles from '../styles/home.module.scss';
 import updateDate from '../redux/actions/date';
-import toggleSpinner from '../redux/actions/spinner';
 import { getPicture } from '../redux/actions/pictures';
 import {
   getPrevDate, getNextDate, toggleFavorite, getNormalizedDate,
 } from '../helpers/index';
 
 const Home = ({
-  spinner, getPicture, date, pictures, updateDate, toggleSpinner,
+  spinner, getPicture, date, pictures, updateDate, error,
 }) => {
   const getCurrPicture = (picDate = date) => {
     const selectedDate = pictures.find(pic => pic.date === picDate);
 
     if (!selectedDate) {
-      return getPicture(picDate);
+      getPicture(picDate);
     }
-
-    return toggleSpinner();
   };
 
   const initialize = () => {
@@ -38,6 +35,7 @@ const Home = ({
 
   const handleNextClick = () => {
     const newDate = getNextDate(date);
+    console.log(54545454, newDate);
     updateDate(newDate);
     getCurrPicture(newDate);
   };
@@ -66,30 +64,38 @@ const Home = ({
       />
       <div>
         { spinner ? <Spinner /> : (
-          <Info
-            title={picture.title}
-            description={picture.explanation}
-            imageUrl={picture.url}
-            btnClolor={picture.favorite ? 'red' : '#b480f3'}
-            handleClick={toggleFavorite}
-            handleSelect={e => getSelectedDate(e.target.value)}
-          />
+          <div>
+            {
+              picture ? (
+                <Info
+                  title={picture.title}
+                  description={picture.explanation}
+                  imageUrl={picture.url}
+                  btnClolor={picture.favorite ? 'red' : '#b480f3'}
+                  handleClick={toggleFavorite}
+                  handleSelect={e => getSelectedDate(e.target.value)}
+                />
+              ) : <p className={homeStyles.error}>{error}</p>
+            }
+          </div>
         )}
       </div>
     </div>
   );
 };
 
-const mapStateToProps = ({ spinner, pictures, date }) => ({
+const mapStateToProps = ({
+  spinner, pictures, date, error,
+}) => ({
   spinner,
   date,
   pictures,
+  error,
 });
 
 const mapDispatchToProps = dispatch => ({
   getPicture: date => dispatch(getPicture(date)),
   updateDate: date => dispatch(updateDate(date)),
-  toggleSpinner: () => dispatch(toggleSpinner()),
 });
 
 Home.propTypes = {
@@ -98,7 +104,11 @@ Home.propTypes = {
   date: PropTypes.string.isRequired,
   pictures: PropTypes.instanceOf(Object).isRequired,
   updateDate: PropTypes.func.isRequired,
-  toggleSpinner: PropTypes.func.isRequired,
+  error: PropTypes.string,
+};
+
+Home.defaultProps = {
+  error: null,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

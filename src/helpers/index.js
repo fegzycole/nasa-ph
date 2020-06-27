@@ -1,40 +1,15 @@
+import moment from 'moment';
+
 export const getTodayDate = () => {
   const today = new Date();
-  return `${today.getFullYear()}-${
-    today.getMonth() + 1 < 10
-      ? `0${today.getMonth() + 1}`
-      : today.getMonth() + 1
-  }-${today.getDate()}`;
+  return moment(today).format('YYYY-MM-DD');
 };
 
-export const getNormalizedDate = date => {
-  const selectedDate = new Date(date);
-  return `${selectedDate.getFullYear()}-${
-    selectedDate.getMonth() + 1 < 10
-      ? `0${selectedDate.getMonth() + 1}`
-      : selectedDate.getMonth() + 1
-  }-${selectedDate.getDate()}`;
-};
+export const getNormalizedDate = date => moment(date).format('YYYY-MM-DD');
 
-export const getPrevDate = date => {
-  let prevDate = new Date(date);
-  prevDate = prevDate.setDate(prevDate.getDate() - 1);
-  return `${prevDate.getFullYear()}-${
-    prevDate.getMonth() + 1 < 10
-      ? `0${prevDate.getMonth() + 1}`
-      : prevDate.getMonth() + 1
-  }-${prevDate.getDate()}`;
-};
+export const getPrevDate = date => moment(date).subtract(1).format('YYYY-MM-DD');
 
-export const getNextDate = date => {
-  let nextDate = new Date(date);
-  nextDate = nextDate.setDate(nextDate.getDate() + 1);
-  return `${nextDate.getFullYear()}-${
-    nextDate.getMonth() + 1 < 10
-      ? `0${nextDate.getMonth() + 1}`
-      : nextDate.getMonth() + 1
-  }-${nextDate.getDate()}`;
-};
+export const getNextDate = date => moment(date).add(1, 'day').format('YYYY-MM-DD');
 
 export const toggleFavorite = ({ date, favorite }) => {
   let picturesOfTheDay = JSON.parse(localStorage.getItem('picturesOfTheDay'));

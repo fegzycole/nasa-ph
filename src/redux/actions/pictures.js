@@ -17,6 +17,8 @@ export const getPicture = date => async dispatch => {
   try {
     dispatch(addError(null));
 
+    dispatch(toggleSpinner());
+
     const { data } = await axios.get(`https://api.nasa.gov/planetary/apod?api_key=${REACT_APP_API_KEY}&date=${date}`);
 
     dispatch(addPicture(data));
@@ -36,11 +38,12 @@ export const getPicture = date => async dispatch => {
     return null;
   } catch (error) {
     const { response, message } = error;
+
     if (!response) {
       dispatch(addError(message));
     } else {
-      const { message } = response;
-      dispatch(addError(message));
+      const { data: { msg } } = response;
+      dispatch(addError(msg));
     }
     dispatch(toggleSpinner());
 

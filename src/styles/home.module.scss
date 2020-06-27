@@ -2,3 +2,14 @@
   padding: 70px 20px;
   width: 100%;
 }
+
+.error {
+  color: #a27bd3;
+  font-size: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  text-align: center;
+}
