@@ -77,7 +77,7 @@ const Home = ({
                     description={picture.explanation}
                     imageUrl={picture.url}
                     btnClolor={isFavorite ? 'red' : '#b480f3'}
-                    text={picture.favorite ? 'Remove Favorite' : 'Set Favorite'}
+                    text={isFavorite ? 'Remove Favorite' : 'Set Favorite'}
 
                     handleClick={() => (isFavorite
                       ? removeFromFavorites(picture)
