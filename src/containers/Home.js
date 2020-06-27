@@ -63,7 +63,7 @@ const Home = ({
       />
       <div>
         { spinner ? <Spinner /> : (
-          <div>
+          <div className={homeStyles.infoContainer}>
             {
               picture ? (
                 <Info
@@ -71,8 +71,11 @@ const Home = ({
                   description={picture.explanation}
                   imageUrl={picture.url}
                   btnClolor={picture.favorite ? 'red' : '#b480f3'}
+                  text={picture.favorite ? 'Remove Favorite' : 'Set Favorite'}
                   handleClick={() => toggleFavorite(picture)}
-                  handleSelect={e => getSelectedDate(e.target.value)}
+                  handleSelect={e => getSelectedDate(e)}
+                  dateValue={date}
+                  showDate
                 />
               ) : <p className={homeStyles.error}>{error}</p>
             }

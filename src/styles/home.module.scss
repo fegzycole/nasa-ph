@@ -13,3 +13,7 @@
   width: 70%;
   text-align: center;
 }
+
+.infoContainer {
+  transition: width 900ms cubic-bezier(0.48, 0.15, 0.18, 1);
+}

@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 
 import Header from './Header';
 import Home from '../containers/Home';
+import Favorites from '../containers/Favorites';
+import Favorite from '../containers/Favorite';
 import appStyles from '../styles/app.module.scss';
 
 function App({ pictures }) {
@@ -17,7 +19,9 @@ function App({ pictures }) {
       }
 
       <Switch>
-        <Route path="/" component={Home} />
+        <Route path="/" exact component={Home} />
+        <Route path="/favorites" exact component={Favorites} />
+        <Route path="/favorite/:date" exact component={Favorite} />
       </Switch>
     </div>
   );

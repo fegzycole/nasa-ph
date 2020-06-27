@@ -1,7 +1,7 @@
 .info {
   width: 60%;
   margin: 0 auto;
-  transition: 900ms cubic-bezier(0.48, 0.15, 0.18, 1);
+  transition: width 900ms cubic-bezier(0.48, 0.15, 0.18, 1);
 }
 
 .potd {
@@ -31,12 +31,5 @@
   color: rgb(199, 199, 199);
   font-weight: 300;
   font-size: 15px;
-}
-
-.date {
-  background: rgb(46, 46, 46);
-  border: none;
-  color: #a27bd3;
-  padding: 10px;
-  border-radius: 5px;
+  text-align: center;
 }

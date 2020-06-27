@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import 'react-day-picker/lib/style.css';
 
 import Button from './Button';
 import infoStyles from '../styles/info.module.scss';
@@ -11,6 +13,9 @@ const Info = ({
   handleClick,
   handleSelect,
   btnClolor,
+  showDate,
+  text,
+  dateValue,
 }) => (
   <div className={infoStyles.info}>
     <h3
@@ -25,15 +30,15 @@ const Info = ({
     />
     <div className={infoStyles.infoGroup}>
       <Button
-        text="Set Favorite"
+        text={text}
         handleClick={handleClick}
         color={btnClolor}
       />
-      <input
-        type="date"
-        onChange={handleSelect}
-        className={infoStyles.date}
-      />
+      {
+        showDate ? (
+          <DayPickerInput onDayChange={handleSelect} value={dateValue} />
+        ) : null
+      }
     </div>
     <p className={infoStyles.description}>{description}</p>
   </div>
@@ -46,6 +51,9 @@ Info.propTypes = {
   handleClick: PropTypes.func,
   handleSelect: PropTypes.func,
   btnClolor: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  showDate: PropTypes.bool,
+  dateValue: PropTypes.string,
 };
 
 Info.defaultProps = {
@@ -54,6 +62,8 @@ Info.defaultProps = {
   description: null,
   handleClick: () => null,
   handleSelect: () => null,
+  showDate: false,
+  dateValue: null,
 };
 
 export default Info;

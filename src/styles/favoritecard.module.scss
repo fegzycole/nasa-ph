@@ -1,0 +1,25 @@
+.favorite {
+  width: 32%;
+  padding: 0 0 10px 0;
+  text-align: center;
+  background: rgb(18, 18, 18);
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.favorite:not(:nth-child(3n + 1)) {
+  margin-left: 2%;
+}
+
+.favoriteImg {
+  width: 100%;
+  object-fit: cover;
+  height: 200px;
+}
+
+.favoriteTitle {
+  font-size: 15px;
+  text-transform: uppercase;
+  font-weight: 100;
+  color: rgb(199, 199, 199);
+}
