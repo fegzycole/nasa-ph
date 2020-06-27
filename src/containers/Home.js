@@ -7,20 +7,25 @@ import Spinner from '../components/Spinner';
 import Info from '../components/Info';
 import homeStyles from '../styles/home.module.scss';
 import updateDate from '../redux/actions/date';
-import { getPicture, toggleFavorite } from '../redux/actions/pictures';
+import { getPicture } from '../redux/actions/pictures';
+import { addToFavorite, removeFromFavorites } from '../redux/actions/favorites';
 import {
   getPrevDate, getNextDate, getNormalizedDate,
 } from '../helpers/index';
 
 const Home = ({
-  spinner, getPicture, date, pictures, updateDate, error, toggleFavorite,
+  spinner,
+  getPicture,
+  date,
+  picture,
+  updateDate,
+  error,
+  favorites,
+  addToFavorite,
+  removeFromFavorites,
 }) => {
   const getCurrPicture = (picDate = date) => {
-    const selectedDate = pictures.find(pic => pic.date === picDate);
-
-    if (!selectedDate) {
-      getPicture(picDate);
-    }
+    getPicture(picDate);
   };
 
   const initialize = () => {
@@ -47,7 +52,7 @@ const Home = ({
 
   useEffect(initialize, []);
 
-  const picture = pictures.find(pic => pic.date === date);
+  const isFavorite = favorites.find(pic => pic.date === picture.date);
 
   return (
     <div className={homeStyles.home}>
@@ -65,19 +70,25 @@ const Home = ({
         { spinner ? <Spinner /> : (
           <div className={homeStyles.infoContainer}>
             {
-              picture ? (
-                <Info
-                  title={picture.title}
-                  description={picture.explanation}
-                  imageUrl={picture.url}
-                  btnClolor={picture.favorite ? 'red' : '#b480f3'}
-                  text={picture.favorite ? 'Remove Favorite' : 'Set Favorite'}
-                  handleClick={() => toggleFavorite(picture)}
-                  handleSelect={e => getSelectedDate(e)}
-                  dateValue={date}
-                  showDate
-                />
-              ) : <p className={homeStyles.error}>{error}</p>
+              error ? <p className={homeStyles.error}>{error}</p> : (
+                (
+                  <Info
+                    title={picture.title}
+                    description={picture.explanation}
+                    imageUrl={picture.url}
+                    btnClolor={isFavorite ? 'red' : '#b480f3'}
+                    text={picture.favorite ? 'Remove Favorite' : 'Set Favorite'}
+
+                    handleClick={() => (isFavorite
+                      ? removeFromFavorites(picture)
+                      : addToFavorite(picture))}
+
+                    handleSelect={e => getSelectedDate(e)}
+                    dateValue={date}
+                    showDate
+                  />
+                )
+              )
             }
           </div>
         )}
@@ -87,33 +98,36 @@ const Home = ({
 };
 
 const mapStateToProps = ({
-  spinner, pictures, date, error,
+  spinner, picture, date, error, favorites,
 }) => ({
   spinner,
   date,
-  pictures,
+  picture,
   error,
+  favorites,
 });
 
 const mapDispatchToProps = dispatch => ({
   getPicture: date => dispatch(getPicture(date)),
   updateDate: date => dispatch(updateDate(date)),
-  toggleFavorite: picture => dispatch(toggleFavorite(picture)),
+  addToFavorite: picture => dispatch(addToFavorite(picture)),
+  removeFromFavorites: picture => dispatch(removeFromFavorites(picture)),
 });
 
 Home.propTypes = {
   spinner: PropTypes.bool.isRequired,
   getPicture: PropTypes.func.isRequired,
   date: PropTypes.string.isRequired,
-  pictures: PropTypes.instanceOf(Object).isRequired,
+  picture: PropTypes.instanceOf(Object).isRequired,
   updateDate: PropTypes.func.isRequired,
   error: PropTypes.string,
-  toggleFavorite: PropTypes.func,
+  favorites: PropTypes.instanceOf(Array).isRequired,
+  addToFavorite: PropTypes.func.isRequired,
+  removeFromFavorites: PropTypes.func.isRequired,
 };
 
 Home.defaultProps = {
   error: null,
-  toggleFavorite: () => null,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

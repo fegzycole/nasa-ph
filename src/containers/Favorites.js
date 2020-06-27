@@ -6,12 +6,10 @@ import { withRouter } from 'react-router-dom';
 import FavoriteCard from '../components/FavoriteCard';
 import favoritesStyles from '../styles/favorites.module.scss';
 import Button from '../components/Button';
-import { removeFavorites } from '../redux/actions/pictures';
+import { removeFavorites } from '../redux/actions/favorites';
 import FavoritesNotFound from '../components/FavoritesNotFound';
 
-const Favorites = ({ pictures, history, removeFavorites }) => {
-  const favoritePics = pictures.filter(pic => pic.favorite === true);
-
+const Favorites = ({ favorites, history, removeFavorites }) => {
   const showFavorite = date => history.push(`/favorite/${date}`);
 
   const redirectHome = () => {
@@ -25,7 +23,7 @@ const Favorites = ({ pictures, history, removeFavorites }) => {
 
   return (
     <div className={favoritesStyles.favoritesContainer}>
-      {favoritePics.length > 0 ? (
+      {favorites.length > 0 ? (
         <div>
           <div className={favoritesStyles.group}>
             <h3 className={favoritesStyles.groupHeader}>My Favorites</h3>
@@ -36,7 +34,7 @@ const Favorites = ({ pictures, history, removeFavorites }) => {
             />
           </div>
           <div className={favoritesStyles.favorites}>
-            {favoritePics.map(pic => (
+            {favorites.map(pic => (
               <FavoriteCard
                 key={`${Math.random()}-${Math.random()}`}
                 title={pic.title}
@@ -56,8 +54,8 @@ const Favorites = ({ pictures, history, removeFavorites }) => {
   );
 };
 
-const mapStateToProps = ({ pictures }) => ({
-  pictures,
+const mapStateToProps = ({ favorites }) => ({
+  favorites,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -65,7 +63,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 Favorites.propTypes = {
-  pictures: PropTypes.instanceOf(Array).isRequired,
+  favorites: PropTypes.instanceOf(Array).isRequired,
   history: PropTypes.instanceOf(Object).isRequired,
   removeFavorites: PropTypes.func.isRequired,
 };

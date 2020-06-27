@@ -2,12 +2,14 @@ import { combineReducers } from 'redux';
 
 import date from './date';
 import spinner from './spinner';
-import pictures from './pictures';
+import picture from './pictures';
 import error from './error';
+import favorites from './favorites';
 
 export default combineReducers({
   date,
   spinner,
-  pictures,
+  picture,
   error,
+  favorites,
 });
