@@ -43,7 +43,7 @@ export const removeFromFavorites = ({ date }) => dispatch => {
 };
 
 export const removeFavorites = () => dispatch => {
-  localStorage.removeItem('');
+  localStorage.removeItem('favorites');
 
   dispatch(clearFavorites());
 };
