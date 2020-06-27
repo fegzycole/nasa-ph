@@ -12,8 +12,6 @@ export const addPicture = payload => ({
 });
 
 export const getPicture = date => async dispatch => {
-  let picturesOfTheDay = JSON.parse(localStorage.getItem('picturesOfTheDay'));
-
   try {
     dispatch(addError(null));
 
@@ -24,18 +22,6 @@ export const getPicture = date => async dispatch => {
     dispatch(addPicture(data));
 
     dispatch(toggleSpinner());
-
-    if (!picturesOfTheDay) {
-      picturesOfTheDay = [data];
-    } else {
-      picturesOfTheDay = [...picturesOfTheDay, data];
-    }
-
-    picturesOfTheDay = JSON.stringify(picturesOfTheDay);
-
-    localStorage.setItem('picturesOfTheDay', picturesOfTheDay);
-
-    return null;
   } catch (error) {
     const { response, message } = error;
 
@@ -46,73 +32,5 @@ export const getPicture = date => async dispatch => {
       dispatch(addError(msg));
     }
     dispatch(toggleSpinner());
-
-    return null;
   }
-};
-
-export const addFavorite = payload => ({
-  type: actions.ADD_FAVORITE,
-  payload,
-});
-
-export const removeFavorite = payload => ({
-  type: actions.REMOVE_FAVORITE,
-  payload,
-});
-
-export const clearFavorites = () => ({
-  type: actions.CLEAR_FAVORITES,
-});
-
-export const toggleFavorite = ({ date, favorite }) => dispatch => {
-  let picturesOfTheDay = JSON.parse(localStorage.getItem('picturesOfTheDay'));
-
-  if (favorite) {
-    picturesOfTheDay = picturesOfTheDay.map(picture => {
-      const pic = picture;
-
-      if (picture.date === date) {
-        delete pic.favorite;
-      }
-
-      return picture;
-    });
-
-    dispatch(removeFavorite(date));
-  } else {
-    picturesOfTheDay = picturesOfTheDay.map(picture => {
-      if (picture.date === date) {
-        return { ...picture, favorite: true };
-      }
-
-      return picture;
-    });
-
-    dispatch(addFavorite(date));
-  }
-
-  picturesOfTheDay = JSON.stringify(picturesOfTheDay);
-
-  localStorage.setItem('picturesOfTheDay', picturesOfTheDay);
-};
-
-export const removeFavorites = () => dispatch => {
-  let picturesOfTheDay = JSON.parse(localStorage.getItem('picturesOfTheDay'));
-
-  picturesOfTheDay = picturesOfTheDay.map(picture => {
-    const pic = picture;
-
-    if (picture.favorite) {
-      delete pic.favorite;
-    }
-
-    return picture;
-  });
-
-  dispatch(clearFavorites());
-
-  picturesOfTheDay = JSON.stringify(picturesOfTheDay);
-
-  localStorage.setItem('picturesOfTheDay', picturesOfTheDay);
 };
