@@ -5,19 +5,20 @@ import PropTypes from 'prop-types';
 
 import Info from '../components/Info';
 import FavoriteNotFound from '../components/FavoritesNotFound';
-import { toggleFavorite } from '../redux/actions/pictures';
+import favoriteStyles from '../styles/favorites.module.scss';
+import { removeFromFavorites } from '../redux/actions/favorites';
 
 const Favorite = ({
-  match, pictures, toggleFavorite, history,
+  match, favorites, removeFromFavorites, history,
 }) => {
   const {
     params: { date },
   } = match;
 
-  const picture = pictures.find(pic => pic.date === date);
+  const picture = favorites.find(pic => pic.date === date);
 
-  const removeFromFavorites = () => {
-    toggleFavorite(picture);
+  const deleteFromFavorites = () => {
+    removeFromFavorites(picture);
     history.push('/favorites');
   };
 
@@ -26,16 +27,16 @@ const Favorite = ({
   };
 
   return (
-    <div>
+    <div className={favoriteStyles.favoritesContainer}>
       {
-        picture && picture.favorite ? (
+        picture ? (
           <Info
             title={picture.title}
             description={picture.explanation}
             imageUrl={picture.url}
-            btnClolor={picture.favorite ? 'red' : '#b480f3'}
+            btnClolor="red"
             text={picture.favorite ? 'Remove Favorite' : 'Set Favorite'}
-            handleClick={removeFromFavorites}
+            handleClick={deleteFromFavorites}
           />
         ) : (
           <FavoriteNotFound
@@ -48,18 +49,18 @@ const Favorite = ({
   );
 };
 
-const mapStateToProps = ({ pictures }) => ({
-  pictures,
+const mapStateToProps = ({ favorites }) => ({
+  favorites,
 });
 
 const mapDispatchToProps = dispatch => ({
-  toggleFavorite: picture => dispatch(toggleFavorite(picture)),
+  removeFromFavorites: picture => dispatch(removeFromFavorites(picture)),
 });
 
 Favorite.propTypes = {
   match: PropTypes.instanceOf(Object).isRequired,
-  pictures: PropTypes.instanceOf(Array).isRequired,
-  toggleFavorite: PropTypes.func.isRequired,
+  favorites: PropTypes.instanceOf(Array).isRequired,
+  removeFromFavorites: PropTypes.func.isRequired,
   history: PropTypes.instanceOf(Object).isRequired,
 };
 

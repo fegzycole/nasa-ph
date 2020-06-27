@@ -70,23 +70,25 @@ const Home = ({
         { spinner ? <Spinner /> : (
           <div className={homeStyles.infoContainer}>
             {
-              picture ? (
-                <Info
-                  title={picture.title}
-                  description={picture.explanation}
-                  imageUrl={picture.url}
-                  btnClolor={isFavorite ? 'red' : '#b480f3'}
-                  text={picture.favorite ? 'Remove Favorite' : 'Set Favorite'}
+              error ? <p className={homeStyles.error}>{error}</p> : (
+                (
+                  <Info
+                    title={picture.title}
+                    description={picture.explanation}
+                    imageUrl={picture.url}
+                    btnClolor={isFavorite ? 'red' : '#b480f3'}
+                    text={picture.favorite ? 'Remove Favorite' : 'Set Favorite'}
 
-                  handleClick={() => (isFavorite
-                    ? removeFromFavorites(picture)
-                    : addToFavorite(picture))}
+                    handleClick={() => (isFavorite
+                      ? removeFromFavorites(picture)
+                      : addToFavorite(picture))}
 
-                  handleSelect={e => getSelectedDate(e)}
-                  dateValue={date}
-                  showDate
-                />
-              ) : <p className={homeStyles.error}>{error}</p>
+                    handleSelect={e => getSelectedDate(e)}
+                    dateValue={date}
+                    showDate
+                  />
+                )
+              )
             }
           </div>
         )}

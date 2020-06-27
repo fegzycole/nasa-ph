@@ -9,13 +9,11 @@ import Favorites from '../containers/Favorites';
 import Favorite from '../containers/Favorite';
 import appStyles from '../styles/app.module.scss';
 
-function App({ pictures }) {
-  const picture = pictures.find(pic => pic.favorite === true);
-
+function App({ favorites }) {
   return (
     <div className={appStyles.app}>
       {
-        picture ? <Header /> : null
+        favorites.length > 0 ? <Header /> : null
       }
 
       <Switch>
@@ -27,12 +25,12 @@ function App({ pictures }) {
   );
 }
 
-const mapStateToProps = ({ pictures }) => ({
-  pictures,
+const mapStateToProps = ({ favorites }) => ({
+  favorites,
 });
 
 App.propTypes = {
-  pictures: PropTypes.instanceOf(Array).isRequired,
+  favorites: PropTypes.instanceOf(Array).isRequired,
 };
 
 export default connect(mapStateToProps)(App);
