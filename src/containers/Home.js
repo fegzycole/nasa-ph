@@ -38,11 +38,12 @@ const Home = ({
 
   const initialize = () => {
     if (!user.email) {
-      history.push('/signin');
+      return history.push('/signin');
     }
 
     loadFavorites();
     getCurrPicture();
+    return undefined;
   };
 
   const handlePrevClick = () => {
