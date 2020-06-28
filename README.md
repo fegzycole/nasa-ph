@@ -43,6 +43,15 @@ buttons besides using the date picker.
 - Display proper error messages when the HTTP request cannot be completed or there’s
 no picture of the day available.
 
+- Typescript as a template for your React project.
+
+- Persisting favorited data on a NoSQL Database (Firebase, Mongo, etc.).
+
+- Add photo previews of previous and next pictures of the day and include them in your
+application.
+
+- Unit testing for the functionality: Save pictures of the day data into local storage.
+
 
 
 ### Built With
