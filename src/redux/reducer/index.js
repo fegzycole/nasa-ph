@@ -5,6 +5,7 @@ import spinner from './spinner';
 import picture from './pictures';
 import error from './error';
 import favorites from './favorites';
+import user from './user';
 
 export default combineReducers({
   date,
@@ -12,4 +13,5 @@ export default combineReducers({
   picture,
   error,
   favorites,
+  user,
 });

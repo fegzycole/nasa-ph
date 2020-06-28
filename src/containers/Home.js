@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Arrow from '../components/Arrow';
@@ -23,12 +24,18 @@ const Home = ({
   favorites,
   addToFavorite,
   removeFromFavorites,
+  history,
+  user,
 }) => {
   const getCurrPicture = (picDate = date) => {
     getPicture(picDate);
   };
 
   const initialize = () => {
+    if (!user) {
+      history.push('/signin');
+    }
+
     getCurrPicture();
   };
 
@@ -98,13 +105,14 @@ const Home = ({
 };
 
 const mapStateToProps = ({
-  spinner, picture, date, error, favorites,
+  spinner, picture, date, error, favorites, user,
 }) => ({
   spinner,
   date,
   picture,
   error,
   favorites,
+  user,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -124,10 +132,13 @@ Home.propTypes = {
   favorites: PropTypes.instanceOf(Array).isRequired,
   addToFavorite: PropTypes.func.isRequired,
   removeFromFavorites: PropTypes.func.isRequired,
+  history: PropTypes.instanceOf(Object).isRequired,
+  user: PropTypes.instanceOf(Object),
 };
 
 Home.defaultProps = {
   error: null,
+  user: null,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));
