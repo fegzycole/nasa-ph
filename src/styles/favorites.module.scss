@@ -21,3 +21,13 @@
   text-transform: uppercase;
   color: #a27bd3;
 }
+
+@media screen and (max-width: 600px) {
+  .favorites {
+    flex-direction: column;
+  }
+
+  .group {
+    width: 90%;
+  }
+}

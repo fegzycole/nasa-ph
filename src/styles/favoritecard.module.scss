@@ -23,3 +23,13 @@
   font-weight: 100;
   color: rgb(199, 199, 199);
 }
+
+@media screen and (max-width: 600px) {
+  .favorite {
+    width: 100%;
+  }
+
+  .favorite:not(:nth-child(3n + 1)) {
+    margin-left: 0;
+  }
+}

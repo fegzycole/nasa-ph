@@ -10,12 +10,17 @@
 }
 
 .DayPickerInput {
+  width: 130px;
+  height: 45px;
+
   input {
     background: rgb(46, 46, 46);
     border: none;
     color: #a27bd3;
-    padding: 10px;
     border-radius: 5px;
+    width: 100%;
+    padding: 10px;
+    height: 100%;
   }
 }
 
