@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Arrow from '../components/Arrow';
@@ -8,7 +9,11 @@ import Info from '../components/Info';
 import homeStyles from '../styles/home.module.scss';
 import updateDate from '../redux/actions/date';
 import { getPicture } from '../redux/actions/pictures';
-import { addToFavorite, removeFromFavorites } from '../redux/actions/favorites';
+import {
+  addToFavorite,
+  removeFromFavorites,
+  loadFavorites,
+} from '../redux/actions/favorites';
 import {
   getPrevDate, getNextDate, getNormalizedDate,
 } from '../helpers/index';
@@ -23,12 +28,20 @@ const Home = ({
   favorites,
   addToFavorite,
   removeFromFavorites,
+  history,
+  user,
+  loadFavorites,
 }) => {
   const getCurrPicture = (picDate = date) => {
     getPicture(picDate);
   };
 
   const initialize = () => {
+    if (!user.email) {
+      history.push('/signin');
+    }
+
+    loadFavorites();
     getCurrPicture();
   };
 
@@ -80,7 +93,7 @@ const Home = ({
                     text={isFavorite ? 'Remove Favorite' : 'Set Favorite'}
 
                     handleClick={() => (isFavorite
-                      ? removeFromFavorites(picture)
+                      ? removeFromFavorites(isFavorite)
                       : addToFavorite(picture))}
 
                     handleSelect={e => getSelectedDate(e)}
@@ -98,13 +111,14 @@ const Home = ({
 };
 
 const mapStateToProps = ({
-  spinner, picture, date, error, favorites,
+  spinner, picture, date, error, favorites, user,
 }) => ({
   spinner,
   date,
   picture,
   error,
   favorites,
+  user,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -112,6 +126,7 @@ const mapDispatchToProps = dispatch => ({
   updateDate: date => dispatch(updateDate(date)),
   addToFavorite: picture => dispatch(addToFavorite(picture)),
   removeFromFavorites: picture => dispatch(removeFromFavorites(picture)),
+  loadFavorites: () => dispatch(loadFavorites()),
 });
 
 Home.propTypes = {
@@ -124,10 +139,13 @@ Home.propTypes = {
   favorites: PropTypes.instanceOf(Array).isRequired,
   addToFavorite: PropTypes.func.isRequired,
   removeFromFavorites: PropTypes.func.isRequired,
+  history: PropTypes.instanceOf(Object).isRequired,
+  user: PropTypes.instanceOf(Object).isRequired,
+  loadFavorites: PropTypes.func.isRequired,
 };
 
 Home.defaultProps = {
   error: null,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));

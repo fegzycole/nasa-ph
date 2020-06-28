@@ -35,7 +35,7 @@ const Favorite = ({
             description={picture.explanation}
             imageUrl={picture.url}
             btnClolor="red"
-            text={picture.favorite ? 'Remove Favorite' : 'Set Favorite'}
+            text="Remove Favorite"
             handleClick={deleteFromFavorites}
           />
         ) : (
