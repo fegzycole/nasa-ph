@@ -6,7 +6,7 @@
 
 ## Live Version
 
-[Live Version](https://cryptic-ridge-38758.herokuapp.com/)
+[Live Version](https://nasa-potday.herokuapp.com/)
 
 
 ### Screenshots
