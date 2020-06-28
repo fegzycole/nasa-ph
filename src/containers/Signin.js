@@ -6,9 +6,12 @@ import PropTypes from 'prop-types';
 import Form from '../components/Form';
 import Spinner from '../components/Spinner';
 import toggleSpinner from '../redux/actions/spinner';
+import setUserStatus from '../redux/actions/user';
 import { auth } from '../firebase/firebase.util';
 
-const SignIn = ({ spinner, toggleSpinner, history }) => {
+const SignIn = ({
+  spinner, toggleSpinner, history, setUserStatus,
+}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -19,10 +22,18 @@ const SignIn = ({ spinner, toggleSpinner, history }) => {
     setError(null);
     try {
       toggleSpinner();
-      await auth.signInWithEmailAndPassword(email, password);
+
+      const { user } = await auth.signInWithEmailAndPassword(email, password);
+
+      const newUser = JSON.stringify(user);
+
+      localStorage.setItem('user', newUser);
+
+      setUserStatus(user);
+
       toggleSpinner();
 
-      history.push('/');
+      return history.push('/');
     } catch (error) {
       toggleSpinner();
       setError(error.message);
@@ -54,12 +65,14 @@ const mapStateToProps = ({ spinner }) => ({
 
 const mapDispatchToProps = dispatch => ({
   toggleSpinner: () => dispatch(toggleSpinner()),
+  setUserStatus: user => dispatch(setUserStatus(user)),
 });
 
 SignIn.propTypes = {
   spinner: PropTypes.bool.isRequired,
   toggleSpinner: PropTypes.func.isRequired,
   history: PropTypes.instanceOf(Object).isRequired,
+  setUserStatus: PropTypes.func.isRequired,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignIn));

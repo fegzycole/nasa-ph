@@ -10,11 +10,15 @@
   margin: 0 auto;
   list-style: none;
   display: flex;
-  justify-content: space-between;
-  cursor: pointer;
+  justify-content: center;
 }
 
 .headerLink {
   color: #b480f3;
   text-decoration: none;
+  cursor: pointer;
+}
+
+.headerList:not(:first-child) {
+  margin-left: 20px;
 }

@@ -9,33 +9,33 @@ import setUserStatus from '../redux/actions/user';
 import { auth } from '../firebase/firebase.util';
 
 const Header = ({
-  user, setUserStatus, history, favorites,
+  user, history, favorites, setUserStatus,
 }) => {
   const logout = async () => {
     await auth.signOut();
 
+    localStorage.removeItem('user');
+
+    setUserStatus({});
+
     history.push('/signin');
   };
-
-  auth.onAuthStateChanged(loggedInUser => {
-    setUserStatus(loggedInUser);
-  });
 
   return (
     <header className={headerStyles.header}>
       <ul className={`${headerStyles.headerLinks} ${user ? 'expandHeader' : ''}`}>
         {
-          user ? (
+          user && user.email ? (
             <>
               {
               favorites.length > 0 ? (
                 <>
-                  <li>
+                  <li className={headerStyles.headerList}>
                     <NavLink to="/" className={headerStyles.headerLink}>
                       Home
                     </NavLink>
                   </li>
-                  <li>
+                  <li className={headerStyles.headerList}>
                     <NavLink to="/favorites" className={headerStyles.headerLink}>
                       Favorites
                     </NavLink>
@@ -43,7 +43,7 @@ const Header = ({
                 </>
               ) : null
             }
-              <li>
+              <li className={headerStyles.headerList}>
                 <div
                   className={headerStyles.headerLink}
                   onClick={logout}
@@ -57,12 +57,12 @@ const Header = ({
             </>
           ) : (
             <>
-              <li>
+              <li className={headerStyles.headerList}>
                 <NavLink to="/signup" className={headerStyles.headerLink}>
                   Signup
                 </NavLink>
               </li>
-              <li>
+              <li className={headerStyles.headerList}>
                 <NavLink to="/signin" className={headerStyles.headerLink}>
                   Signin
                 </NavLink>
@@ -76,14 +76,10 @@ const Header = ({
 };
 
 Header.propTypes = {
-  user: PropTypes.instanceOf(Object),
-  setUserStatus: PropTypes.func.isRequired,
+  user: PropTypes.instanceOf(Object).isRequired,
   history: PropTypes.instanceOf(Object).isRequired,
   favorites: PropTypes.instanceOf(Array).isRequired,
-};
-
-Header.defaultProps = {
-  user: null,
+  setUserStatus: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ user, favorites }) => ({
@@ -92,7 +88,7 @@ const mapStateToProps = ({ user, favorites }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setUserStatus: payload => dispatch(setUserStatus(payload)),
+  setUserStatus: user => dispatch(setUserStatus(user)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

@@ -17,6 +17,7 @@ const FormInput = ({
       type={type}
       name={name}
       value={value}
+      data-testid={name}
       onChange={handleChange}
       placeholder={placeholderText}
       required

@@ -1,6 +1,8 @@
 import actions from '../actions/index';
 
-const user = (state = null, { type, payload }) => {
+const user = JSON.parse(localStorage.getItem('user'));
+
+const userReducer = (state = user || {}, { type, payload }) => {
   switch (type) {
     case actions.SET_USER:
       return payload;
@@ -10,4 +12,4 @@ const user = (state = null, { type, payload }) => {
   }
 };
 
-export default user;
+export default userReducer;

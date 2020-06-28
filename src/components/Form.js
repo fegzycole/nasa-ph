@@ -21,7 +21,7 @@ const Form = ({
   <>
     <div className={formStyles.formContainer}>
       <img src={NasaLogo} alt="" className={formStyles.logo} />
-      <form onSubmit={handleSubmit} className={formStyles.form}>
+      <form onSubmit={handleSubmit} className={formStyles.form} data-testid="form">
         <h1 className={formStyles.header}>{headerText}</h1>
         <FormInput
           name="email"
