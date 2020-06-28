@@ -1,5 +1,4 @@
 import thunk from 'redux-thunk';
-import moxios from 'moxios';
 import configureMockStore from 'redux-mock-store';
 
 import { addToFavorite, removeFavorites } from '../redux/actions/favorites';
@@ -26,7 +25,6 @@ const picture = {
 
 let store;
 beforeEach(() => {
-  moxios.install();
   store = mockStore(initialState);
 
   let user = {
@@ -38,8 +36,6 @@ beforeEach(() => {
 });
 
 afterEach(async () => {
-  moxios.uninstall();
-
   await store.dispatch(removeFavorites());
 });
 
