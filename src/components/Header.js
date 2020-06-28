@@ -4,19 +4,23 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import headerStyles from '../styles/header.module.scss';
-
 import setUserStatus from '../redux/actions/user';
+import handleLogout from '../redux/actions/logout';
 import { auth } from '../firebase/firebase.util';
 
 const Header = ({
-  user, history, favorites, setUserStatus,
+  user, history, favorites, setUserStatus, handleLogout,
 }) => {
   const logout = async () => {
     await auth.signOut();
 
     localStorage.removeItem('user');
 
+    localStorage.removeItem('favorites');
+
     setUserStatus({});
+
+    handleLogout();
 
     history.push('/signin');
   };
@@ -80,6 +84,7 @@ Header.propTypes = {
   history: PropTypes.instanceOf(Object).isRequired,
   favorites: PropTypes.instanceOf(Array).isRequired,
   setUserStatus: PropTypes.func.isRequired,
+  handleLogout: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ user, favorites }) => ({
@@ -89,6 +94,7 @@ const mapStateToProps = ({ user, favorites }) => ({
 
 const mapDispatchToProps = dispatch => ({
   setUserStatus: user => dispatch(setUserStatus(user)),
+  handleLogout: () => dispatch(handleLogout()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
